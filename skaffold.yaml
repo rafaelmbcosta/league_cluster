@@ -1,0 +1,26 @@
+apiVersion: skaffold/v2beta4
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: rafaelcosta/league-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: rafaelcosta/league-season
+      context: season
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.rb'
+            dest: .

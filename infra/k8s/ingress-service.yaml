@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: mylocalhost.dev
+      http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: client-service
+              servicePort: 3000
+          - path: /api/seasons/?(.*)
+            backend:
+              serviceName: season-service
+              servicePort: 3001
+
+  tls:
+    - hosts:
+      - "mylocalhost.dev"
+      secretName: wildcard-mylocalhost-dev

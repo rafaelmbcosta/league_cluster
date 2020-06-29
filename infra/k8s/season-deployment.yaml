@@ -1,0 +1,33 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: season-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: season
+  template:
+    metadata:
+      labels:
+        app: season
+    spec:
+      containers:
+      - name: season
+        image: rafaelcosta/league-season
+        ports:
+        - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: season-service
+spec:
+  selector:
+    app: season
+  ports:
+    - name: season
+      protocol: TCP
+      port: 3001
+      targetPort: 3001
