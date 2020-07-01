@@ -10,14 +10,14 @@ spec:
     - host: mylocalhost.dev
       http:
         paths:
-          - path: /?(.*)
-            backend:
-              serviceName: client-service
-              servicePort: 3000
           - path: /api/seasons/?(.*)
             backend:
               serviceName: season-service
               servicePort: 3001
+          - path: /?(.*)
+            backend:
+              serviceName: client-service
+              servicePort: 3000
 
   tls:
     - hosts:
